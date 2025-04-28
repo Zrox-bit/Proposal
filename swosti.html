@@ -1,0 +1,195 @@
+<!doctype html>
+<html lang="en"> 
+ <head> 
+  <meta charset="UTF-8"> 
+  <title>Will You Be Mine?</title> 
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&amp;family=Poppins:wght@400;700&amp;display=swap" rel="stylesheet"> 
+  <link rel="stylesheet" href="style.css"> 
+ <style type="text/css" id="dcoder_stylesheet">:root {
+  --primary-color: #ff69b4;
+  --secondary-color: #fff0f5;
+  --font-heading: 'Great Vibes', cursive;
+  --font-body: 'Poppins', sans-serif;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background: linear-gradient(135deg, #ffe4e1, #ffc0cb);
+  background-attachment: fixed;
+  font-family: var(--font-body);
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.container {
+  text-align: center;
+  z-index: 1;
+}
+
+h1 {
+  font-family: var(--font-heading);
+  font-size: 48px;
+  color: var(--primary-color);
+  margin-bottom: 30px;
+}
+
+.glow {
+  font-size: 60px;
+  color: #ff69b4;
+  animation: glitter 1.5s linear infinite, glowEffect 1s ease-in-out infinite alternate;
+}
+
+@keyframes glitter {
+  0% { text-shadow: 0 0 5px #ff69b4, 0 0 10px #ff69b4, 0 0 15px #ff69b4, 0 0 20px #ff69b4, 0 0 25px #ff69b4; }
+  50% { text-shadow: 0 0 5px #ff1493, 0 0 10px #ff1493, 0 0 15px #ff1493, 0 0 20px #ff1493, 0 0 25px #ff1493; }
+  100% { text-shadow: 0 0 5px #ff69b4, 0 0 10px #ff69b4, 0 0 15px #ff69b4, 0 0 20px #ff69b4, 0 0 25px #ff69b4; }
+}
+
+@keyframes glowEffect {
+  0% { text-shadow: 0 0 10px #ff69b4, 0 0 20px #ff69b4; }
+  100% { text-shadow: 0 0 20px #ff1493, 0 0 30px #ff1493; }
+}
+
+.buttons {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  position: relative;
+}
+
+button {
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  padding: 15px 30px;
+  font-size: 20px;
+  border-radius: 30px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  z-index: 1;
+}
+
+#message {
+  margin-top: 30px;
+  font-size: 24px;
+  color: #333;
+  animation: fadeIn 2s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Floating hearts in the background */
+.heartBackground {
+  position: absolute;
+  top: 100%;
+  color: rgba(255, 105, 180, 0.3);
+  font-size: 20px;
+  animation: floatBackground 20s linear infinite;
+}
+
+@keyframes floatBackground {
+  0% { transform: translateY(0) translateX(0); }
+  100% { transform: translateY(-120vh) translateX(50px); }
+}
+
+/* Floating hearts after YES click */
+.heart {
+  position: absolute;
+  color: red;
+  font-size: 24px;
+  animation: floatHearts 5s linear forwards;
+}
+
+@keyframes floatHearts {
+  0% { transform: translateY(0) scale(1); opacity: 1; }
+  100% { transform: translateY(-800px) scale(2); opacity: 0; }
+}</style></head> 
+ <body> 
+  <div class="container"> 
+   <h1>Will You Be Mine, <span class="glow">Swosti ji 💓</span></h1> 
+   <div class="buttons"> <button id="yesBtn">Yes</button> <button id="noBtn">No</button> 
+   </div> 
+   <div id="message"></div> 
+   <div id="heartsContainer"></div> 
+  </div> 
+  <script src="script.js"></script> 
+ 
+<script type="text/javascript" id="dcoder_script">const yesBtn = document.getElementById('yesBtn');
+const noBtn = document.getElementById('noBtn');
+const message = document.getElementById('message');
+const heartsContainer = document.getElementById('heartsContainer');
+
+// Typing animation when clicking Yes
+yesBtn.addEventListener('click', () => {
+  typeMessage("You just made me the happiest person ever! ❤️ I promise to love you forever!");
+
+  // Create floating hearts
+  for (let i = 0; i < 50; i++) {
+    createHeart();
+  }
+});
+
+// No button runs and spins away
+noBtn.addEventListener('mouseover', () => {
+  const x = Math.random() * (window.innerWidth - noBtn.offsetWidth);
+  const y = Math.random() * (window.innerHeight - noBtn.offsetHeight);
+  noBtn.style.position = 'absolute';
+  noBtn.style.left = `${x}px`;
+  noBtn.style.top = `${y}px`;
+  noBtn.style.transform = 'rotate(720deg)';
+});
+
+// Function to type the message letter by letter
+function typeMessage(text) {
+  message.innerHTML = "";
+  let i = 0;
+  const speed = 50; // typing speed in ms
+
+  function type() {
+    if (i < text.length) {
+      message.innerHTML += text.charAt(i);
+      i++;
+      setTimeout(type, speed);
+    }
+  }
+
+  type();
+}
+
+// Create hearts floating up after clicking Yes
+function createHeart() {
+  const heart = document.createElement('div');
+  heart.classList.add('heart');
+  heart.style.left = Math.random() * window.innerWidth + 'px';
+  heart.style.top = window.innerHeight + 'px';
+  heart.innerHTML = '❤️';
+  heartsContainer.appendChild(heart);
+
+  setTimeout(() => {
+    heart.remove();
+  }, 5000);
+}
+
+// Create background floating hearts
+for (let i = 0; i < 30; i++) {
+  createBackgroundHeart();
+}
+
+function createBackgroundHeart() {
+  const heart = document.createElement('div');
+  heart.classList.add('heartBackground');
+  heart.innerHTML = '❤️';
+  heart.style.left = Math.random() * window.innerWidth + 'px';
+  heart.style.fontSize = (Math.random() * 20 + 10) + 'px';
+  heart.style.animationDuration = (10 + Math.random() * 10) + 's';
+  document.body.appendChild(heart);
+}</script></body></html>
